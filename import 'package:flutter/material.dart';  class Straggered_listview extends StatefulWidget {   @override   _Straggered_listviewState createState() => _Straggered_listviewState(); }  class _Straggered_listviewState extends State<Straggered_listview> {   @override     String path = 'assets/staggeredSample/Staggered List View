@@ -1,0 +1,371 @@
+
+
+
+
+
+import 'package:flutter/material.dart';
+
+class Straggered_listview extends StatefulWidget {
+  @override
+  _Straggered_listviewState createState() => _Straggered_listviewState();
+}
+
+class _Straggered_listviewState extends State<Straggered_listview> {
+  @override
+
+
+  String path = 'assets/staggeredSample/';
+
+  Widget build(BuildContext context) {
+
+  getwid(int i){
+
+if(i==0){
+
+  return Column(
+
+    children: [
+
+
+
+
+
+
+
+      Row(
+
+        children: [  getimg(path+'1.png'),
+
+          Column(children: [
+            getimg(path+'2.png'),
+
+            getimg(path+'3.png'),
+
+
+
+
+          ],),
+
+
+
+
+        ],
+
+      ),
+
+      Row(children: [
+
+        getimg(path+'4.png'),
+
+        getimg(path+'5.png'),
+        getimg(path+'6.png'),
+      ],)
+
+
+
+
+
+    ],
+
+  );
+}
+
+
+return Column(
+
+  children: [
+
+
+
+
+
+
+
+    Row(
+
+      children: [
+
+        Column(children: [
+          getimg(path+'7.png'),
+
+          getimg(path+'8.png'),
+
+
+
+
+        ],),
+
+        getimg(path+'9.png'),
+
+
+
+      ],
+
+    ),
+
+    Row(children: [
+
+      getimg(path+'4.png'),
+
+      getimg(path+'5.png'),
+      getimg(path+'6.png'),
+    ],)
+
+
+
+
+
+  ],
+
+);
+
+
+  }
+
+  Grid gr=Grid();
+  gr.add(path+'1.png' );
+  gr.add(path+'2.png' );
+  gr.add(path+'3.png' );
+  gr.add(path+'4.png' );
+  gr.add(path+'5.png' );
+  gr.add(path+'6.png' );
+
+
+  gr.add(path+'7.png' );
+  gr.add(path+'8.png' );
+  gr.add(path+'9.png' );
+
+
+  gr.add(path+'1.png' );
+  gr.add(path+'2.png' );
+  gr.add(path+'3.png' );
+  gr.add(path+'4.png' );
+  gr.add(path+'5.png' );
+  gr.add(path+'6.png' );
+
+
+  gr.add(path+'7.png' );
+  gr.add(path+'8.png' );
+  gr.add(path+'9.png' );
+
+  return   Material(
+       child:gr.getGrid(),
+
+
+    );
+
+
+  }
+
+
+}
+
+
+class Grid {
+
+
+
+
+  int length=0;
+  List <Block> blocklst=[];
+
+
+
+  add(String url){
+
+    if( length== 0 ||  blocklst.last.ls.length ==6){
+      blocklst.add(Block(length));
+      length++;
+print(length);
+    }
+
+    blocklst.last.add(url);
+
+
+
+
+  }
+
+getGrid(){
+
+    return ListView. builder(
+      itemCount:  blocklst.length,
+      itemBuilder:(context, index) => blocklst[index].grid,
+
+    );
+}
+
+
+
+
+}
+
+class Block{
+
+  Block(this.blockIndex){
+    blockIndex%2==0?isleftBig=true:isleftBig = false;
+
+  }
+
+  bool isleftBig;
+  List<Grid_Image> ls = [];
+  int blockIndex;
+  Widget grid;
+
+  add(String url){
+
+    if((ls.length==0  && isleftBig  ) ||(ls.length==2  && !isleftBig))
+      _addingrid (Grid_Image( url, true),true);
+
+else if(ls.length!=0  && isleftBig){
+
+  _addingrid (Grid_Image( url, false),true);
+
+}
+else
+    _addingrid(Grid_Image( url, false),false);
+
+  }
+  _addingrid(Gri,bool isleft){
+
+    ls.add(Gri);
+
+    if(isleft){
+print('is left');
+
+      grid= Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+
+
+
+
+
+
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ls[0].getImage(),
+
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                ls.length >1? ls[1].getImage():Container( color: Colors.black,),
+                ls.length >2?   ls[2].getImage():Container(color: Colors.black,),
+
+
+
+
+              ],),
+
+
+
+
+            ],
+
+          ),
+
+          Row(children: [
+
+            ls.length >3?     ls[3].getImage():Container(),
+
+            ls.length >4?     ls[4].getImage():Container(),
+            ls.length >5?   ls[5].getImage():Container(),
+          ],)
+
+
+
+
+
+        ],
+
+      );
+    }
+
+else{
+      print('is right');
+      grid=  Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+
+
+
+
+
+
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ls[0].getImage(),
+
+                  ls.length >1? ls[1].getImage():Container(  color: Colors.black, ),
+
+
+
+
+                ],),
+              ls.length >2? ls[2].getImage():Container( color: Colors.black,),
+
+
+
+            ],
+
+          ),
+
+          Row(children: [
+
+            ls.length >3? ls[3].getImage():Container(),
+
+            ls.length >4? ls[4].getImage():Container(),
+            ls.length >5? ls[5].getImage():Container(),
+          ],)
+
+
+
+
+
+        ],
+
+      );
+    }
+
+
+  }
+
+
+}
+class Grid_Image{
+
+  Grid_Image(this.url,this.isBig){
+    isBig? size = 250:size= 125;
+  }
+  String url;
+  bool isBig;
+  double size;
+
+
+  Widget getImage(){
+    return     Container(child:getimg(url),height: size,color: Colors.amber, );
+
+
+  }
+
+}
+
+getimg( String str){
+  return     Image.asset(str,fit: BoxFit.fill,);
+
+}
